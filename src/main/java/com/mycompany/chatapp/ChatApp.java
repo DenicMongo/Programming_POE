@@ -12,6 +12,7 @@ public class ChatApp {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        LoginClass obj = new LoginClass();
         
         
         
