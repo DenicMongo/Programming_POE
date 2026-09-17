@@ -31,7 +31,7 @@ public class ChatApp {
         String password = scanner.nextLine() .trim();
         
         System.out.print("Enter cellphone number (+27 XXXXXXXXX): ");
-        String number = scanner.nextLine() .trim();//number
+        String number = scanner.nextLine() .trim();
         
         System.out.println(obj.registerUser(firstName, lastName, username, password, number));
         
