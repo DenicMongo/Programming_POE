@@ -10,11 +10,16 @@ package com.mycompany.chatapp;
  */
 class LoginClass {
     
+    
+    // Attributes
     String firstName;
     String lastName;
     String username;
     String password;
     String cellPhoneNumber;
+    
+    
+    
     
     public boolean checkUserName(String username){
         if (username.contains("_") && username.length() <= 5) {
@@ -49,6 +54,13 @@ class LoginClass {
     }
     public boolean checkCellPhoneNumber(String number){
         if (number.matches("^\\+27(?: ?)\\d{9}$")) {
+            /*  
+            ^     = beginning of the input
+            //+27 = user input must start with +27
+            // d  = a digit
+            {9}   = exactly nine(9) digits
+            $     = end of the input
+            */
             System.out.println("Cellphone number successfully added.");
             return true;
         } else {
@@ -61,11 +73,14 @@ class LoginClass {
     public String registerUser(String firstName, String lastName, String username, String password, String number){
         if (checkUserName(username) && checkPasswordComplexity(password)
                 && checkCellPhoneNumber(number)) {
-            this.firstName = firstName;
+            this.firstName = firstName;           
             this.lastName = lastName;
             this.username = username;
             this.password = password;
             this.cellPhoneNumber = number;
+            
+            // user inputs have to be correctly entered by the user for the results to be successfully
+            
             return "User has been registered successfully.";
         } else {
             return "Registration failed due to invalid input.";
