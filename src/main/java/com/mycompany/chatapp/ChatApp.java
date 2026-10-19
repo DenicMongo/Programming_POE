@@ -13,6 +13,7 @@ public class ChatApp {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         LoginClass obj = new LoginClass();
+        Message method = new Message();
         
         System.out.println("====================================================");
         System.out.println("              WELCOME TO MY CHAT APP                ");
