@@ -6,7 +6,10 @@ package com.mycompany.chatapp;
 
 import java.util.Random;
 import java.util.Scanner;
-import java.util.*;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -44,10 +47,20 @@ public class Message {
         return messageID != null && messageID.length() <= 10;
     }
     
+    public String checkMessageLength() {
+        if (messageText.length() <= 250) {
+        return "Message ready to send.";
+        }
+        
+        return "Message exceeds 250 characters by " 
+                + (messageText.length() - 250) + "; please reduce the size.";
+    }
+    
     public String checkRecipientCell(){
         if (recipient != null && recipient.matches("^\\+27(?: ?)\\d{9}$")) {
             return "Cellphone number successfully captured.";
         }
+        
         return "Invalid cellphone number.";
     }
     
@@ -62,8 +75,14 @@ public class Message {
         return (idStart + ":" + messageNumber + ":" + firstWord + lastWord).toUpperCase();
     }
     
-    public String SentMessage() {
-        Scanner scanner = new Scanner(System.in);
+    public String SentMessage(Scanner scanner) {
+        
+        if (messageText.length() > 250)
+            return "Please enter a message of less than 250 characters.";
+        if (!checkRecipientCell().contains("successfully"))
+            return checkRecipientCell();
+        if (!checkMessageID())
+            return "Message ID is invalid.";
         
         System.out.println("\nChoose an option:");
         System.out.println("1. Send Message");
@@ -106,7 +125,7 @@ public class Message {
         return output.toString();
     }
     
-    public int returnTotalMessagess() {
+    public static int returnTotalMessagess() {
         return totalMessages;
     }
     
