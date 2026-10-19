@@ -26,7 +26,10 @@ public class Message {
     String messageHash;
     String status;
     
+    // Counts the total number of messages successfully sent.
     private static int totalMessages = 0;
+    
+    // Stores sent messages while the application is running.
     private static final List<Message> messages = new ArrayList<>();
     
     //Message Methods below
@@ -41,16 +44,21 @@ public class Message {
     }
     
     
+    // Generates a random 10-digit message ID.
     private String generateMessageID() {
         Random rand = new Random();
         long id = (long)(rand.nextDouble() * 9_000_000_000L) + 1_000_000_000L;
         return String.valueOf(id);
     }
     
+    
+    // Checks that the message ID contains no more than 10 characters.
     public boolean checkMessageID(){
         return messageID != null && messageID.length() <= 10;
     }
     
+    
+    // Checks whether the message contains 250 characters or fewer
     public String checkMessageLength() {
         if (messageText.length() <= 250) {
         return "Message ready to send.";
@@ -60,6 +68,8 @@ public class Message {
                 + (messageText.length() - 250) + "; please reduce the size.";
     }
     
+    
+    // Checks whether the recipient uses the South African +27 format.
     public String checkRecipientCell(){
         if (recipient != null && recipient.matches("^\\+27(?: ?)\\d{9}$")) {
             return "Cellphone number successfully captured.";
@@ -69,17 +79,24 @@ public class Message {
             + "an international code. Please correct the number and try again.";
     }
     
+    
+    
+    // Creates a message hash using the ID, message number,
+    // first word and last word of the message.
     public String createMessageHash() {
         String[] words = messageText.trim().split("\\s+");
         
         String firstWord = words.length > 0 ? words[0] : "";
         String lastWord = words.length > 0 ? words[words.length - 1] : "";
         
+        // Use the first two characters of the message ID.
         String idStart = messageID.substring(0, 2);
         
         return (idStart + ":" + messageNumber + ":" + firstWord + lastWord).toUpperCase();
     }
     
+    
+    // Displays the available actions and asks the user to choose one
     public String SentMessage(Scanner scanner) {
         
         if (messageText.length() > 250)
@@ -122,6 +139,8 @@ public class Message {
         }
     }
     
+    
+    //Returns the total number of messages sent
     public static void resetTotalMessages() {
         totalMessages = 0;
     }
@@ -138,10 +157,14 @@ public class Message {
         return output.toString();
     }
     
+    
+    // Resets the message count; useful when running unit tests
     public static int returnTotalMessagess() {
         return totalMessages;
     }
     
+    
+    //Saves a message as a JSON object in messages.json.
     public void storeMessage() {
         try (FileWriter writer = new FileWriter("messages.json", true)) {
         
@@ -158,7 +181,9 @@ public class Message {
             System.out.println("Error storing message: " + e.getMessage());
         }
     }
-
+    
+    
+    // Escapes special characters so text can be written safely in JSON.
     private String escapeJSON(String text) {
         return text
                 .replace("\\", "\\\\") 
