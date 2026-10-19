@@ -17,6 +17,8 @@ import java.util.List;
  */
 public class Message {
     
+    //Attributes
+    
     String messageID;
     int messageNumber;
     String recipient;
@@ -26,6 +28,8 @@ public class Message {
     
     private static int totalMessages = 0;
     private static final List<Message> messages = new ArrayList<>();
+    
+    //Message Methods below
     
     public Message(int messageNumber, String recipient,String messageText){
         this.messageID = generateMessageID();
@@ -61,7 +65,8 @@ public class Message {
             return "Cellphone number successfully captured.";
         }
         
-        return "Invalid cellphone number.";
+        return "Cell phone number is incorrectly formatted or does not contain "
+            + "an international code. Please correct the number and try again.";
     }
     
     public String createMessageHash() {
@@ -88,10 +93,14 @@ public class Message {
         System.out.println("1. Send Message");
         System.out.println("2. Disregard Message");
         System.out.println("3. Store Message to send later");
-        System.out.print("Enter your choice: ");
-        
+        System.out.print("\nEnter your choice: ");
         String choice = scanner.nextLine();
         
+        return processMessageChoice(choice);
+    }
+    //SentMessage ends here
+        
+    public String processMessageChoice(String choice){   
         switch (choice) {
             case "1":
                 status = "Sent";
@@ -111,6 +120,10 @@ public class Message {
             default:
                 return "Invalid choice.";
         }
+    }
+    
+    public static void resetTotalMessages() {
+        totalMessages = 0;
     }
     
     public String printMessages() {
